@@ -1,72 +1,33 @@
 # Home Automation Configuration
 This repo contains the configuration and notes around my home automation setup for my Apartment using Home Assistant and a few other technologies.
 
+The original configuration I had before I renovated my apartment can be found in the version 1 tag of this repo.
+
 ## Equipment
 
 I currently have the following equipment configured.
 
-### Raspberry Pi 3
-I run [Home Assistant via HASS](https://www.home-assistant.io/) on a Raspberry Pi 3 and it acts as the central hub for a variety of home automation and other IOT components.
+| Component | Function |
+|------------|----------|
+| <ul><li>Intel NUC Mini PC</li></ul> | <ul><li>Model: BOXNUC7CJYSAL4 (4GB + 32GB)</li><li>Runs Ubuntu</li><li>Runs Home Assistant Core</li></ul> |
+| <ul><li>USB Zigbee Stick</li></ul> | <ul><li>Provides Zigbee capability to Home Assistant</li></ul> |
+| <ul><li>Phillips HUE Basestation</li></ul> | <ul><li>Hue functionalut</li><li>Phillips HUE Bulbs</li><li>Light Strips</li><li>Hue Switches</li><li>Movement sensors</li><li>IKEA Tradfi downlights</li></ul> |
+| Xiaomi Aquara | <ul><li>Door and Window Sensors</li><li>Temp and Humidity Sensors</li><li>Motion sensors</li><li>Smart Power Plugs</li></ul> |
+| Xiaomi Rockrobo Vacuum Cleaner | <ul><li>Automated claning system</li></ul> |
+| Xiaomi Flower sensors | <ul><li>Automated claning system</li></ul> |
+| Xiaomi Cameras | <ul><li>Automated claning system</li></ul> |
+| Daikin Air Conditioner | <ul><li>Automated claning system</li></ul> |
+| Broadcom IR Blaster | <ul><li>Automated claning system</li></ul> |
+| Google Home and Home Assistant Cloud | <ul><li>Automated claning system</li></ul> |
+| Unifi Network equipment | <ul><li>Automated claning system</li></ul> |
 
 
-### Phillips Hue Lighting
-This started the obession, I bought a few of these to tinker with, and it got me interested in all things IOT.
 
-At the moment, I have a mixture of;
+Changes
+* Moved off the Pi3
+* Moved off the Xiaomi hub to native support in Zigbee
 
-* Light bulbs
-* Light Strips
-* Switches
-* Movement sensors
-
-The home assistant integration is very mature, and it does just work.
-
-I use the motion sensors in my living room to turn on ambient lighting when required, primarilly in winter and later at night in summer if/when required.
-
-### Xiaomi Aquara
-
-I have an Xiaomi Aquara kit which has great Home Assistant support and I use a number of the sensors in the house to measure and control various things which I'll go into a bit more detail below.
-
-If you want to understand more about these sensors and actuators there is a great overview of these products on the following Youtube video: [Xiaomi Smart Home Products Explained
-](https://www.youtube.com/watch?v=hpb-ZiQvuZ8) and the configuration steps can be found at the  following [Documentation page](https://www.home-assistant.io/components/xiaomi_aqara/)
-
-
-#### Xiaomi Smart Power Plugs
-I use these to control a heated seedling matt for germinating chilli seeds during the Winter.
-
-This plug allows me to remotely turn it on / off in the event that I need to (primarilly due to fire and safety concerns), and as I have a better grasp of the home automation landscape now, I'll use the temprature sensors I have installed to automatically turn on/off the heater when the ambient or soil temprature are below certain thresholds.
-
-Another thing I do like about these plugs is that they provide metrics on the power usage of the attached device.
-
-
-#### Xiaomi Door / Window Sensors
-I have a number of these throughout my house to allow me to see if I have left open doors and windows when I am out, this is particularly useful when a storm is coming.
-
-In addtion to this, I use the following automation to turn off the air conditioning if the balcony door has been open for more than 2 minutes.
-
-```
-automation:
-  - alias: "Balcony Door Open turn off AC"
-    trigger:
-      platform: state
-      entity_id: binary_sensor.door_window_sensor_158d0001d6855d
-      from: 'off'
-      to: 'on'
-      for:
-        minutes: 2
-    action:
-      service: climate.set_operation_mode
-      data:
-        entity_id: climate.daikinap62514
-        operation_mode: "off"
-```
-
-
-#### Xiaomi Movement and Light Sensors
-I currently don't use these for much, I stuck them near some of my Chilli Plants to measure the light levels before I had the plant sensors and found they weren't really suited for this (unsurprisingly), and as my Hue setup has motion sensors that work well for light control, I'll likely put them to other use in the future.
-
-#### Xiaomi IOT Button
-I used this to get the hang of Home Assistant automation capabilities, turning on Hue lights with Xiaomi Buttons is a good use case. I think I'll be using this to enable "Movie Mode" in my living room, in which movement sensors are disabled for say 3 hours and the lights are dimmed and set to a preset configuration.
+Integration image
 
 
 ### Xiaomi Rockrobo Vacuum Cleaner
